@@ -2,7 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { type MoviesType } from "./types/movieType";
 
 const initialState:MoviesType = {
-        movies: []
+        movies: [
+            {
+                id: Date.now(),
+                name: 'Merlin',
+                rating: 10,
+                watched: true,
+            },
+        ]
     }
 
 const movieSlice = createSlice({
@@ -10,12 +17,12 @@ const movieSlice = createSlice({
     initialState,
     reducers: {
         addMovie: (state, action) => {
-            const {name, rating, watched} = action.payload            
+            const {name, rating} = action.payload            
             state.movies.push({                
                 id: Date.now(),
                 name,
                 rating,
-                watched
+                watched: false
             })
         },
 
@@ -26,7 +33,7 @@ const movieSlice = createSlice({
        updateMovie: (state, action) => {
             const movie = state.movies.find(m => m.id === action.payload.id)
             if (movie) {
-                movie.name = action.payload.name ?? movie.name
+                movie.name = action.payload.name ?? movie.name,
                 movie.rating = action.payload.rating ?? movie.rating
             }
         },
