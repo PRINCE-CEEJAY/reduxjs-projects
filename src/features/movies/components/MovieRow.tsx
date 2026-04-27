@@ -9,7 +9,7 @@ export default function MovieRow({movie}: {movie:MovieType}) {
   const [editing, setEditing] = useState<MovieType | null>(null)
 
   const handleDel = (id: number) => {
-    dispatch(removeMovie({id}))
+    dispatch(removeMovie(id))
   }
 
   const handleEdit = (data:MovieType) => {

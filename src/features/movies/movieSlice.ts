@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { type MoviesType } from "./types/movieType";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+import { type MoviesType, type MovieType } from "./types/movieType";
 
 const initialState:MoviesType = {
         movies: [
@@ -16,7 +17,7 @@ const movieSlice = createSlice({
     name: 'movies',
     initialState,
     reducers: {
-        addMovie: (state, action) => {
+        addMovie: (state, action: PayloadAction<Omit<MovieType, "id">>) => {
             const {name, rating} = action.payload            
             state.movies.push({                
                 id: Date.now(),
@@ -26,11 +27,11 @@ const movieSlice = createSlice({
             })
         },
 
-        removeMovie: (state, action) => {
-            state.movies = state.movies.filter(movie => movie.id !== action.payload.id)
+        removeMovie: (state, action: PayloadAction<number>) => {
+            state.movies = state.movies.filter(movie => movie.id !== action.payload)
          }, 
 
-       updateMovie: (state, action) => {
+       updateMovie: (state, action: PayloadAction<MovieType>) => {
             const movie = state.movies.find(m => m.id === action.payload.id)
             if (movie) {
                 movie.name = action.payload.name ?? movie.name,
@@ -38,7 +39,7 @@ const movieSlice = createSlice({
             }
         },
 
-         toggleWatched: (state, action) => {
+         toggleWatched: (state, action: PayloadAction<MovieType>) => {
             state.movies = state.movies.map(movie => movie.id === action.payload.id ? {...movie, watched: !movie.watched}: movie)
          }
     }

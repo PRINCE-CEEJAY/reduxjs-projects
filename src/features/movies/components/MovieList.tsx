@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux'
 import {type MovieType } from '../types/movieType'
 import MovieRow from './MovieRow'
 import { useState } from 'react'
+import { selectMovies } from '../movieSelectors'
 
 export const MovieList = () => {
-  const movieData:MovieType[] = useSelector((state) => state.movies.movies)
+  const movieData:MovieType[] = useSelector(selectMovies)
   const[loadForm, setLoadForm] = useState(false)
 
   return (
